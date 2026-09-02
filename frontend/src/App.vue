@@ -13,7 +13,7 @@ const catalogStore = useCatalogStore()
 
     <!-- Main Content Area -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
-      <RouterView />
+      <RouterView :key="$route.fullPath" />
     </main>
 
     <!-- Global Toast Notification -->

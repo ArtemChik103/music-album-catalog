@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRoute, useRouter, RouterLink } from 'vue-router'
 import { useCatalogStore } from '../stores/catalogStore'
 import AddTrackModal from '../components/AddTrackModal.vue'
@@ -32,17 +32,31 @@ const isDeleteAlbumOpen = ref(false)
 const isDeleteTrackOpen = ref(false)
 const trackToDelete = ref(null)
 
-onMounted(async () => {
+const loadAlbumData = async (id) => {
+  if (!id) return
   try {
     await Promise.all([
-      catalogStore.fetchAlbumDetail(albumId.value),
+      catalogStore.fetchAlbumDetail(id),
       catalogStore.fetchArtists(),
       catalogStore.fetchSongs()
     ])
   } catch (err) {
     router.push('/')
   }
+}
+
+onMounted(() => {
+  loadAlbumData(albumId.value)
 })
+
+watch(
+  () => route.params.id,
+  (newId) => {
+    if (newId) {
+      loadAlbumData(newId)
+    }
+  }
+)
 
 const openAddTrackModal = () => {
   isAddTrackOpen.value = true
