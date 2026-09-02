@@ -9,10 +9,10 @@
 ## Онлайн-демо
 
 Сервис развернут в облаке Railway:
-- **Интерфейс приложения**: в панели Railway перейдите в **Settings → Networking → Public Networking → Generate Domain** для получения публичного URL.
-- **Интерактивная документация API**: `/api/docs/` (Swagger UI)
-- **Альтернативная документация**: `/api/redoc/` (ReDoc)
-- **Спецификация OpenAPI**: `/api/schema/`
+- **Веб-приложение**: [https://superb-possibility-production-b964.up.railway.app](https://superb-possibility-production-b964.up.railway.app)
+- **Интерактивная документация API (Swagger UI)**: [https://superb-possibility-production-b964.up.railway.app/api/docs/](https://superb-possibility-production-b964.up.railway.app/api/docs/)
+- **Альтернативная документация (ReDoc)**: [https://superb-possibility-production-b964.up.railway.app/api/redoc/](https://superb-possibility-production-b964.up.railway.app/api/redoc/)
+- **Спецификация OpenAPI (YAML)**: [https://superb-possibility-production-b964.up.railway.app/api/schema/](https://superb-possibility-production-b964.up.railway.app/api/schema/)
 
 ---
 
