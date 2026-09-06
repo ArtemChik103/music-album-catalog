@@ -1,13 +1,15 @@
 # Build stage
 FROM node:20-alpine AS build-stage
 
+RUN corepack enable && corepack prepare pnpm@10.7.0 --activate
+
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install --no-audit --no-fund
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 # Production stage
 FROM nginx:alpine AS production-stage
