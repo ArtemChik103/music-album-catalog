@@ -2,6 +2,7 @@
 set -e
 
 PORT="${PORT:-8000}"
+WORKERS="${WEB_CONCURRENCY:-2}"
 
 echo "Applying database migrations..."
 python manage.py migrate --noinput
@@ -17,5 +18,5 @@ if Album.objects.count() == 0:
     call_command('seed_data')
 "
 
-echo "Starting Gunicorn on port $PORT..."
-exec gunicorn --bind "0.0.0.0:$PORT" music_catalog.wsgi:application --workers 3 --timeout 120
+echo "Starting Gunicorn with $WORKERS workers on port $PORT..."
+exec gunicorn --bind "0.0.0.0:$PORT" music_catalog.wsgi:application --workers "$WORKERS" --timeout 120

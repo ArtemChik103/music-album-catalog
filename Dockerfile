@@ -2,11 +2,13 @@
 FROM node:20-alpine AS frontend-builder
 WORKDIR /app/frontend
 
-COPY frontend/package*.json ./
-RUN npm install --no-audit --no-fund
+RUN corepack enable && corepack prepare pnpm@10.7.0 --activate
+
+COPY frontend/package.json frontend/pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 COPY frontend/ ./
-RUN npm run build
+RUN pnpm run build
 
 # Stage 2: Python Backend + Unified Serving
 FROM python:3.11-slim
@@ -30,7 +32,7 @@ COPY --from=frontend-builder /app/frontend/dist /app/frontend_dist
 
 # Copy unified startup script
 COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
+RUN sed -i 's/\r$//' /app/start.sh && chmod +x /app/start.sh
 
 ENV PORT=8000
 EXPOSE 8000

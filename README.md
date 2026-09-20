@@ -6,13 +6,12 @@
 
 ---
 
-## Онлайн-демо
+## Онлайн-демо и документация
 
-Сервис развернут в облаке Railway:
-- **Веб-приложение**: [https://superb-possibility-production-b964.up.railway.app](https://superb-possibility-production-b964.up.railway.app)
-- **Интерактивная документация API (Swagger UI)**: [https://superb-possibility-production-b964.up.railway.app/api/docs/](https://superb-possibility-production-b964.up.railway.app/api/docs/)
-- **Альтернативная документация (ReDoc)**: [https://superb-possibility-production-b964.up.railway.app/api/redoc/](https://superb-possibility-production-b964.up.railway.app/api/redoc/)
-- **Спецификация OpenAPI (YAML)**: [https://superb-possibility-production-b964.up.railway.app/api/schema/](https://superb-possibility-production-b964.up.railway.app/api/schema/)
+- **Интерактивная документация API (Swagger UI)**: `/api/docs/`
+- **Альтернативная документация (ReDoc)**: `/api/redoc/`
+- **Спецификация OpenAPI (YAML)**: `/api/schema/`
+- Инструкция по развертыванию в облаке: см. раздел [Деплой на Render](#деплой-на-render).
 
 ---
 
@@ -67,6 +66,32 @@
 ```bash
 docker compose down
 ```
+
+---
+
+## Деплой на Render (Бесплатный хостинг)
+
+Проект полностью оптимизирован для бесплатного размещения в облаке [Render](https://render.com) (тариф Free Web Service) через единый Docker-контейнер и файл конфигурации [render.yaml](render.yaml).
+
+### Автоматический деплой через Render Blueprint:
+
+1. Авторизуйтесь на [render.com](https://render.com) через GitHub.
+2. В верхнем меню выберите **Blueprints** → **New Blueprint Instance**.
+3. Подключите репозиторий `ArtemChik103/music-album-catalog`.
+4. Render автоматически считает конфигурацию из `render.yaml`, задаст безопасный `DJANGO_SECRET_KEY`, выставит переменные окружения и эндпоинт проверки работоспособности (`/api/v1/stats/`).
+5. Нажмите **Apply**.
+
+### Ручной деплой (Web Service):
+Если настраивать вручную без Blueprint:
+1. **New +** → **Web Service** → подключите репозиторий.
+2. Выберите среду: **Docker**.
+3. План: **Free**.
+4. Health Check Path: `/api/v1/stats/`.
+5. Переменные окружения:
+   - `DJANGO_DEBUG` = `False`
+   - `DJANGO_SECRET_KEY` = `<любая случайная строка>`
+   - `WEB_CONCURRENCY` = `2`
+6. Нажмите **Create Web Service**.
 
 ---
 
